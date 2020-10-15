@@ -1,3 +1,4 @@
+// deps
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -5,6 +6,8 @@ import Switch from '@material-ui/core/Switch'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import HomeIcon from '@material-ui/icons/Home'
+import { useHistory } from 'react-router-dom'
+import IconButton from '@material-ui/core/IconButton'
 
 const useStyles = makeStyles(() => ({
   container: {},
@@ -19,7 +22,16 @@ interface IHeaderProps {
 }
 
 const Header: React.FC<IHeaderProps> = ({ theme, setTheme }) => {
+  // useStyles
   const classes = useStyles()
+  // useRouter
+  const history = useHistory()
+
+  const handleRedirect = React.useCallback(
+    (route: string) => () => history.push(`${route}`),
+    []
+  )
+
   return (
     <AppBar position="static">
       <Toolbar variant="dense">
@@ -30,7 +42,9 @@ const Header: React.FC<IHeaderProps> = ({ theme, setTheme }) => {
           className={classes.container}
         >
           <Grid item>
-            <HomeIcon />
+            <IconButton onClick={handleRedirect('/')}>
+              <HomeIcon />
+            </IconButton>
           </Grid>
           <Switch
             checked={theme}

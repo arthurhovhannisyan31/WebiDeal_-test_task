@@ -12,8 +12,16 @@ const Forks: React.FC = () => {
   const classes = useStyles()
   return (
     <Grid container justify="center">
-      <Grid container sm={8} className={classes.container} direction="column">
+      <Grid
+        container
+        sm={8}
+        className={classes.container}
+        direction="column"
+        spacing={3}
+      >
         <Greeting />
+        <SearchBar />
+        <ForksTable />
       </Grid>
     </Grid>
   )

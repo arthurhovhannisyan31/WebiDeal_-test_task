@@ -5,7 +5,7 @@ export default makeStyles((theme: Theme) => ({
   container: {
     padding: theme.spacing(0),
   },
-  emphasize: {
-    fontStyle: 'italic',
+  table: {
+    minWidth: 650,
   },
 }))

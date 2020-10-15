@@ -8,8 +8,17 @@ import useStyles from '_/components/Forks/components/Greeting/style'
 const Greeting: React.FC = () => {
   const classes = useStyles()
   return (
-    <Grid container>
-      <Typography />
+    <Grid container item justify="center">
+      <Grid container sm={6} direction="column" alignItems="center">
+        <Typography variant="h3">Simple GitHub fork lookup!</Typography>
+        <Typography variant="subtitle1">
+          This is a simple service for github forks lookup.
+        </Typography>
+        <Typography variant="subtitle1">
+          Please use following format for search{' '}
+          <span className={classes.emphasize}>:owner/:repositoryName</span>
+        </Typography>
+      </Grid>
     </Grid>
   )
 }
