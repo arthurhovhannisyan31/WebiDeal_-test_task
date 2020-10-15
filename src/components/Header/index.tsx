@@ -15,15 +15,20 @@ const useStyles = makeStyles(() => ({
 
 interface IHeaderProps {
   theme: boolean
-  setTheme: any
+  setTheme: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Header: React.FC<IHeaderProps> = ({ theme, setTheme }) => {
   const classes = useStyles()
   return (
-    <AppBar position={'static'}>
-      <Toolbar variant={'dense'}>
-        <Grid container justify={'space-between'} className={classes.container}>
+    <AppBar position="static">
+      <Toolbar variant="dense">
+        <Grid
+          container
+          alignItems="center"
+          justify="space-between"
+          className={classes.container}
+        >
           <Grid item>
             <HomeIcon />
           </Grid>
