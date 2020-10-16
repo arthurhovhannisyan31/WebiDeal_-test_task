@@ -38,7 +38,7 @@ const Forks: React.FC = () => {
   const { error, loading, data, totalCount } = useSelector(forksSelector)
   const tableData = data.get(`${repository}-${rowsPerPage}-${page}`) || []
   const handleSubmit = React.useCallback(
-    (str: string, pageNum: number) => {
+    (str: string) => {
       history.push(`/search?page=${0}&repository=${str}`)
       setPage(0)
     },

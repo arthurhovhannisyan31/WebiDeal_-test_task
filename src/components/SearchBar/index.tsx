@@ -12,7 +12,7 @@ interface IProps {
   value: string
   page?: number
   setValue: React.Dispatch<React.SetStateAction<string>>
-  onSubmit: (str: string, page: number) => void
+  onSubmit: (str: string) => void
   error: string
   loading: boolean
 }
@@ -34,7 +34,7 @@ const SearchBar: React.FC<IProps> = ({
     [setValue]
   )
 
-  const handleSubmit = React.useCallback(() => onSubmit(value, page), [
+  const handleSubmit = React.useCallback(() => onSubmit(value), [
     onSubmit,
     value,
     page,
