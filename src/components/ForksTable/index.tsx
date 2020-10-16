@@ -33,23 +33,16 @@ const ForksTable: React.FC<IProps> = ({
   setRowsPerPage,
   totalCount,
 }) => {
-  console.log(page)
-
-  console.log(totalCount)
-
+  console.log(data)
   // useStyles
   const classes = useStyles()
-
-  // useState
-
-  const rows = React.useMemo(
-    () =>
-      data
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map(rowSelector),
-    [data, page, rowsPerPage]
-  )
-
+  // useMemo
+  const rows = React.useMemo(() => data.map(rowSelector), [
+    data,
+    page,
+    rowsPerPage,
+  ])
+  // useCallback
   const handleChangePage = React.useCallback(
     (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
       setPage(newPage)
@@ -65,10 +58,9 @@ const ForksTable: React.FC<IProps> = ({
     [setPage, setRowsPerPage]
   )
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage)
-
-  // todo change pagination to request params
+  const emptyRows = data?.length
+    ? rowsPerPage - Math.min(rowsPerPage, totalCount - page * rowsPerPage)
+    : rowsPerPage
 
   return (
     <Grid container item justify="center">
@@ -103,11 +95,11 @@ const ForksTable: React.FC<IProps> = ({
                   </TableCell>
                 </TableRow>
               ))}
-              {/* {emptyRows > 0 && ( */}
-              {/*  <TableRow style={{ height: 53 * emptyRows }}> */}
-              {/*    <TableCell colSpan={6} /> */}
-              {/*  </TableRow> */}
-              {/* )} */}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 61 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
             </TableBody>
           </Table>
           <TablePagination

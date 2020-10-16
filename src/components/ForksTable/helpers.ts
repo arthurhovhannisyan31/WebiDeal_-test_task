@@ -1,5 +1,5 @@
 // helpers
-import { IRow, IFork } from '_/components/Forks/components/ForksTable/types'
+import { IRow, IFork } from '_/components/ForksTable/types'
 
 export const rowSelector = ({
   full_name,

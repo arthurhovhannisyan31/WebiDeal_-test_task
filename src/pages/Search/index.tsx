@@ -34,6 +34,7 @@ const Forks: React.FC = () => {
   // store
   const dispatch: AppDispatch = useDispatch()
   const { error, loading, data, totalCount } = useSelector(forksSelector)
+  const tableData = data.get(`${repository}-${rowsPerPage}-${page}`) || []
   const handleSubmit = React.useCallback(
     (str: string, pageNum: number) => {
       history.push(`/search?page=${pageNum}&repository=${str}`)
@@ -42,14 +43,14 @@ const Forks: React.FC = () => {
   )
 
   React.useEffect(() => {
-    if (!Number.isInteger(totalCount) && repository) {
+    if (!totalCount && repository) {
       dispatch(getForksCountAction(repository as string))
     }
     // eslint-disable-next-line
   }, [])
 
   React.useEffect(() => {
-    if (page && repository) {
+    if (!Number.isNaN(page) && repository) {
       dispatch(
         getForksPageAction({
           page,
@@ -59,7 +60,13 @@ const Forks: React.FC = () => {
       )
     }
     // eslint-disable-next-line
-  }, [dispatch, pageValue, repository])
+  }, [dispatch, repository, page, rowsPerPage])
+
+  React.useEffect(() => {
+    if (Number.isNaN(pageValue)) {
+      setPage(+(pageValue as never) as number)
+    }
+  }, [pageValue])
 
   return (
     <Grid container justify="center">
@@ -84,14 +91,14 @@ const Forks: React.FC = () => {
           setValue={setSearchVal}
           onSubmit={handleSubmit}
         />
-        {(!(Number.isInteger(page) && repository) || error) && (
+        {(Number.isNaN(page) || !repository || error) && (
           <Typography className={classes.error}>
             Please check your url, make sure page and repository params are
             present
           </Typography>
         )}
         <ForksTable
-          data={data}
+          data={tableData}
           page={page}
           setPage={setPage}
           rowsPerPage={rowsPerPage}

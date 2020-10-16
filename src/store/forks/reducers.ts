@@ -1,5 +1,5 @@
 // deps
-import { Record } from 'immutable'
+import { Record, Map } from 'immutable'
 // helpers
 import {
   GET_FORKS_COUNT_SUCCESS,
@@ -8,21 +8,27 @@ import {
   GET_FORKS_PAGE_SUCCESS,
   GET_FORKS_ERROR,
 } from '_/store/forks/constants'
-import { IAction, IFork } from '_/store/forks/types'
+import {
+  IAction,
+  // IFork
+} from '_/store/forks/types'
 
 // todo move types to types file
 
 interface IInitialStateRecord {
   loading: boolean
   error: any
-  data: IFork[]
+  // todo types
+  data: any
   totalCount: number
 }
 
 const InitialStateRecord = Record<IInitialStateRecord>({
   loading: false,
   error: false,
-  data: [],
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  data: new Map(),
   totalCount: 0,
 })
 
@@ -38,8 +44,13 @@ const forksReducer = (state = new InitialStateRecord(), action: IAction) => {
     case GET_FORKS_PAGE_SUCCESS:
       return state
         .set('loading', false)
-        .set('data', payload)
         .set('error', false)
+        .update('data', (collection) =>
+          collection.set(
+            `${payload.url}-${payload.per_page}-${payload.page}`,
+            payload.data
+          )
+        )
     case GET_FORKS_COUNT_SUCCESS:
       return state
         .set('loading', false)

@@ -15,7 +15,15 @@ export function* workerGetForksSaga(action: IAction) {
   try {
     const { payload } = action
     const { data } = yield call(fetchGitHubForksPage, payload)
-    yield put({ type: GET_FORKS_PAGE_SUCCESS, payload: data })
+    yield put({
+      type: GET_FORKS_PAGE_SUCCESS,
+      payload: {
+        data,
+        page: payload.page,
+        per_page: payload.per_page,
+        url: payload.url,
+      },
+    })
   } catch (err) {
     yield put({
       type: GET_FORKS_ERROR,
@@ -28,7 +36,10 @@ export function* workerGetForksCountSaga(action: IAction) {
   try {
     const { payload } = action
     const { data } = yield call(fetchGitHubUser, payload)
-    yield put({ type: GET_FORKS_COUNT_SUCCESS, payload: data?.forks_count })
+    yield put({
+      type: GET_FORKS_COUNT_SUCCESS,
+      payload: data.forks_count,
+    })
   } catch (err) {
     yield put({
       type: GET_FORKS_ERROR,
