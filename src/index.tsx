@@ -1,14 +1,10 @@
+// deps
 import React from 'react'
 import { render } from 'react-dom'
+// components
 import App from './App'
 
-const renderApp = () =>
-  render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-  )
+const renderApp = () => render(<App />, document.getElementById('root'))
 
 renderApp()
 // eslint-disable-next-line

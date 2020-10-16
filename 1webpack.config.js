@@ -1,9 +1,14 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+require('dotenv').config()
+
 module.exports = {
-  mode: 'production',
+  mode: 'development',
+  devtool: 'inline-source-map',
+  entry: [path.resolve(__dirname, 'src', 'index.tsx')],
   devServer: {
     host: 'localhost',
     hot: true,
@@ -16,8 +21,6 @@ module.exports = {
       ignored: ['node_modules'],
     },
   },
-  devtool: 'inline-source-map',
-  entry: [path.resolve(__dirname, 'src', 'index.tsx')],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[hash].bundle.js',
@@ -46,6 +49,7 @@ module.exports = {
       template: path.resolve(__dirname, 'src', 'index.html'),
       cache: false,
     }),
+    new webpack.EnvironmentPlugin(['API_URL']),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],

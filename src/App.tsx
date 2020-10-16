@@ -1,42 +1,45 @@
-// global imports
+// deps
 import React from 'react'
+import { Switch, BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
-
-// local imports
+import CircularProgress from '@material-ui/core/CircularProgress'
+// components
 import Header from '_/components/Header'
-import Home from '_/components/Home'
 import theme from '_/theme'
+// helpers
+import interceptor from '_/utils/interceptor.service'
+import routes from '_/routes'
+import store from '_/store'
 
 const useStyles = makeStyles(() => ({
   container: {},
 }))
 
-const CommonContext = React.createContext<any>({})
+interceptor()
 
 const App: React.FC = () => {
   const classes = useStyles()
-  const [darkMode, setDarkMode] = React.useState(false)
-  const memoContextValue = React.useMemo(
-    () => ({
-      test: '',
-    }),
-    []
-  )
+  const [darkMode, setDarkMode] = React.useState(true)
 
   return (
-    <CommonContext.Provider value={memoContextValue}>
-      <ThemeProvider theme={theme({ darkMode })}>
-        <CssBaseline />
-        <Grid container className={classes.container}>
-          <Grid container>
-            <Header theme={darkMode} setTheme={setDarkMode} />
-            <Home />
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme({ darkMode })}>
+          <CssBaseline />
+          <Grid container className={classes.container}>
+            <Grid container direction="column">
+              <Header theme={darkMode} setTheme={setDarkMode} />
+              <React.Suspense fallback={<CircularProgress />}>
+                <Switch>{routes}</Switch>
+              </React.Suspense>
+            </Grid>
           </Grid>
-        </Grid>
-      </ThemeProvider>
-    </CommonContext.Provider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
