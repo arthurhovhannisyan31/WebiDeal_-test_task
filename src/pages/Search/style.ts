@@ -3,9 +3,12 @@ import { makeStyles, Theme } from '@material-ui/core/styles'
 
 export default makeStyles((theme: Theme) => ({
   container: {
-    padding: theme.spacing(0),
+    paddingTop: theme.spacing(5),
   },
-  table: {
-    minWidth: 650,
+  error: {
+    color: 'red',
+  },
+  emphasize: {
+    fontStyle: 'italic',
   },
 }))

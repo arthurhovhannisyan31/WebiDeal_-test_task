@@ -1,10 +1,21 @@
 // deps
 import axios from 'axios'
+// helpers
+import { IFetchGitHubForksProps } from '_/store/forks/types'
 
-export function fetchGitHubForks(path: string) {
-  console.log(process.env.API_URL)
-  console.log(path)
-  // return axios.get(path)
+export function fetchGitHubForksPage({
+  page,
+  per_page,
+  url,
+}: IFetchGitHubForksProps) {
+  return axios.get(`${process.env.API_URL}/repos/${url}/forks`, {
+    params: {
+      page,
+      per_page,
+    },
+  })
 }
 
-export function test() {}
+export function fetchGitHubUser(url: string) {
+  return axios.get(`${process.env.API_URL}/repos/${url}`)
+}

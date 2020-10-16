@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 export const ROUTES = {
-  FORKS: '/',
+  HOME: '/',
+  SEARCH: '/search*',
   NOT_FOUND: '*',
 }
 

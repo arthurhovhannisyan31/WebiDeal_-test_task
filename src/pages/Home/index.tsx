@@ -1,29 +1,29 @@
 // deps
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 // components
-import Greeting from '_/components/Forks/components/Greeting'
-import SearchBar from '_/components/Forks/components/SearchBar'
-import ForksTable from '_/components/Forks/components/ForksTable'
+import Greeting from '_/components/Greeting'
+import SearchBar from '_/components/SearchBar'
 // helpers
-import useStyles from '_/components/Forks/components/style'
-import { getForksAction } from '_/store/forks/actions'
-import { AppDispatch } from '_/store/store'
+import useStyles from '_/pages/Home/style'
+import { forksSelector } from '_/pages/Home/helpers'
 
 const Forks: React.FC = () => {
   // useStyles
   const classes = useStyles()
+  // useRouter
+  const history = useHistory()
   // useState
   const [searchVal, setSearchVal] = React.useState('')
-  // useDispatch
-  const dispatch: AppDispatch = useDispatch()
-  //
+  // store
+  const { error, loading } = useSelector(forksSelector)
   const handleSubmit = React.useCallback(
     (str: string) => {
-      dispatch(getForksAction(str))
+      history.push(`/search?page=1&repository=${str}`)
     },
-    [dispatch]
+    [history]
   )
 
   return (
@@ -38,11 +38,12 @@ const Forks: React.FC = () => {
       >
         <Greeting />
         <SearchBar
+          loading={loading}
+          error={error?.message}
           value={searchVal}
           setValue={setSearchVal}
           onSubmit={handleSubmit}
         />
-        <ForksTable />
       </Grid>
     </Grid>
   )
