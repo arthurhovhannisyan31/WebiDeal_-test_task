@@ -10,8 +10,36 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 // helpers
 import useStyles from '_/components/Forks/components/SearchBar/style'
 
-const SearchBar: React.FC = () => {
+interface IProps {
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
+  onSubmit: (str: string) => void
+}
+
+const SearchBar: React.FC<IProps> = ({ value, setValue, onSubmit }) => {
   const classes = useStyles()
+
+  const handleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(event.target.value)
+    },
+    [setValue]
+  )
+
+  const handleSubmit = React.useCallback(() => onSubmit(value), [
+    onSubmit,
+    value,
+  ])
+
+  const handleKeyDown = React.useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      if (event.key === 'Enter') {
+        handleSubmit()
+      }
+    },
+    [handleSubmit]
+  )
+
   return (
     <Grid container item justify="center">
       <Grid container sm={4}>
@@ -20,9 +48,12 @@ const SearchBar: React.FC = () => {
           <OutlinedInput
             id="fork-search"
             type="text"
+            value={value}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton>
+                <IconButton onClick={handleSubmit}>
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
