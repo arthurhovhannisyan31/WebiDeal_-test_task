@@ -39,7 +39,7 @@ const Forks: React.FC = () => {
   const tableData = data.get(`${repository}-${rowsPerPage}-${page}`) || []
   const handleSubmit = React.useCallback(
     (str: string, pageNum: number) => {
-      history.push(`/search?page=${pageNum}&repository=${str}`)
+      history.push(`/search?page=${0}&repository=${str}`)
       setPage(0)
     },
     [history]
@@ -86,7 +86,6 @@ const Forks: React.FC = () => {
           Please use following format for search{' '}
           <span className={classes.emphasize}>:owner/:repositoryName</span>
         </Typography>
-        <span>page: {page}</span>
         <SearchBar
           loading={loading}
           error={error?.message}
