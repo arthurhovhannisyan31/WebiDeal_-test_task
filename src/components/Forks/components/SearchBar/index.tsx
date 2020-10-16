@@ -42,7 +42,7 @@ const SearchBar: React.FC<IProps> = ({ value, setValue, onSubmit }) => {
 
   return (
     <Grid container item justify="center">
-      <Grid container sm={4}>
+      <Grid container item sm={4}>
         <FormControl className={classes.margin} variant="outlined" fullWidth>
           <InputLabel htmlFor="fork-search">Fork Search</InputLabel>
           <OutlinedInput

@@ -9,7 +9,7 @@ const Greeting: React.FC = () => {
   const classes = useStyles()
   return (
     <Grid container item justify="center">
-      <Grid container sm={6} direction="column" alignItems="center">
+      <Grid container item sm={6} direction="column" alignItems="center">
         <Typography variant="h3">Simple GitHub fork lookup!</Typography>
         <Typography variant="subtitle1">
           This is a simple service for github forks lookup.

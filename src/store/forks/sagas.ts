@@ -7,12 +7,14 @@ import {
   GET_FORKS_ERROR,
 } from '_/store/forks/constants'
 import { IAction } from '_/store/forks/types'
+import { fetchGitHubForks } from '_/store/forks/queries'
 
 export function* workerGetForksSaga(action: IAction) {
   try {
     const { payload } = action
     console.log(payload)
-    yield put({ type: GET_FORKS_SUCCESS })
+    fetchGitHubForks(payload)
+    yield put({ type: GET_FORKS_SUCCESS, payload: [] })
   } catch (err) {
     yield put({
       type: GET_FORKS_ERROR,

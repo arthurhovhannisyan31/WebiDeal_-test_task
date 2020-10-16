@@ -1,9 +1,12 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
+require('dotenv').config()
+
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   devServer: {
     host: 'localhost',
     hot: true,
@@ -46,6 +49,10 @@ module.exports = {
       template: path.resolve(__dirname, 'src', 'index.html'),
       cache: false,
     }),
+    // new webpack.DefinePlugin({
+    //   'process.env.API_URL': JSON.stringify(process.env.API_URL),
+    // }),
+    new webpack.EnvironmentPlugin(['API_URL']),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],

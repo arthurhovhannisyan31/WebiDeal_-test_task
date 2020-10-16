@@ -76,7 +76,7 @@ const ForksTable: React.FC = () => {
 
   return (
     <Grid container item justify="center">
-      <Grid container sm={8}>
+      <Grid container item sm={8}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
