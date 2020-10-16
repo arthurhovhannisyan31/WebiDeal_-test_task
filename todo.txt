@@ -38,7 +38,4 @@ add linter and precommit
 
 
 // todo
-
-search field validation
-search url format
 fix spinner position in suspense

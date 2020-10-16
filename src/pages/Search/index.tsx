@@ -21,7 +21,9 @@ const Forks: React.FC = () => {
   // useRouter
   const history = useHistory()
   const location = useLocation()
-  const { pageValue = 0, repository = '' } = queryString.parse(location.search)
+  const { page: pageValue = 0, repository = '' } = queryString.parse(
+    location.search
+  )
 
   // useState
   const [searchVal, setSearchVal] = React.useState<string>(
@@ -38,6 +40,7 @@ const Forks: React.FC = () => {
   const handleSubmit = React.useCallback(
     (str: string, pageNum: number) => {
       history.push(`/search?page=${pageNum}&repository=${str}`)
+      setPage(0)
     },
     [history]
   )
@@ -47,7 +50,7 @@ const Forks: React.FC = () => {
       dispatch(getForksCountAction(repository as string))
     }
     // eslint-disable-next-line
-  }, [])
+  }, [repository])
 
   React.useEffect(() => {
     if (!Number.isNaN(page) && repository) {
@@ -63,7 +66,7 @@ const Forks: React.FC = () => {
   }, [dispatch, repository, page, rowsPerPage])
 
   React.useEffect(() => {
-    if (Number.isNaN(pageValue)) {
+    if (!Number.isNaN(pageValue)) {
       setPage(+(pageValue as never) as number)
     }
   }, [pageValue])
@@ -83,6 +86,7 @@ const Forks: React.FC = () => {
           Please use following format for search{' '}
           <span className={classes.emphasize}>:owner/:repositoryName</span>
         </Typography>
+        <span>page: {page}</span>
         <SearchBar
           loading={loading}
           error={error?.message}

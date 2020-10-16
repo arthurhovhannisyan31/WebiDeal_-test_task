@@ -33,7 +33,6 @@ const ForksTable: React.FC<IProps> = ({
   setRowsPerPage,
   totalCount,
 }) => {
-  console.log(data)
   // useStyles
   const classes = useStyles()
   // useMemo
@@ -96,7 +95,7 @@ const ForksTable: React.FC<IProps> = ({
                 </TableRow>
               ))}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 61 * emptyRows }}>
+                <TableRow style={{ height: 62 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
