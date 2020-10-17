@@ -10,11 +10,7 @@ app.use(favicon(`${__dirname}/dist/favicon.ico`))
 app.use(express.static(__dirname))
 app.use(express.static(path.join(__dirname, 'dist')))
 
-app.get('/ping', (_, res) => {
-  return res.send('pong')
-})
-
-app.get('/', (_, res) => {
+app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 app.listen(PORT, () => {
