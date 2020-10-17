@@ -37,5 +37,13 @@ add linter and precommit
 использование проксирующего сервера, который сам обращается к github  api
 
 
+gaearon/whatthefuck.is
+gaearon/overreacted.io
+gaearon/react-deep-force-update
+search?page=10&repository=gaearon/react-deep-force-update
+
 // todo
 fix spinner position in suspense
+
+total count doenst update when repo name changes
+empty rows height is wrong for 2 lines

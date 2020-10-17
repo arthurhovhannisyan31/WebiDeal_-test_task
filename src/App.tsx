@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <ThemeProvider theme={theme({ darkMode })}>
           <CssBaseline />
           <Grid container className={classes.container}>
