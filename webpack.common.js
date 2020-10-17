@@ -19,6 +19,7 @@ module.exports = {
       template: path.resolve(__dirname, 'src', 'index.html'),
       cache: false,
       title: 'Production',
+      favicon: path.resolve(__dirname, 'src/static', 'favicon.ico'),
     }),
   ],
   module: {
