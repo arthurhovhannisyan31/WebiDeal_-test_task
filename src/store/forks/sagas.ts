@@ -38,7 +38,10 @@ export function* workerGetForksCountSaga(action: IAction) {
     const { data } = yield call(fetchGitHubUser, payload)
     yield put({
       type: GET_FORKS_COUNT_SUCCESS,
-      payload: data.forks_count,
+      payload: {
+        data: data.forks_count,
+        url: payload,
+      },
     })
   } catch (err) {
     yield put({

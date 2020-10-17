@@ -2,19 +2,11 @@
 добавление экрана/модального окна с формой добавления выбранного форка в избранное (избранное хранится в localstorage).
 Отображается избранное как еще одна колонка в таблице
 Избранное из предыдущего пункта сохраняется на сервисе Firebase Realtime Database, а не в localStorage
-выкладка на heroku
 Использование какой-либо анимации
 использование проксирующего сервера, который сам обращается к github  api
 
-
-gaearon/whatthefuck.is
-gaearon/overreacted.io
-gaearon/react-deep-force-update
-search?page=10&repository=gaearon/react-deep-force-update
-
 // todo
 fix spinner position in suspense
-add linter
-add precommit
-total count doenst update when repo name changes
-empty rows height is wrong for 2 lines
+
+add modal
+add backdrop + spinner

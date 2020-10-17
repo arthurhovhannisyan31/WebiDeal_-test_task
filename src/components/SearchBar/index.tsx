@@ -7,6 +7,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import CircularProgress from '@material-ui/core/CircularProgress'
 // helpers
 import useStyles from '_/components/SearchBar/style'
+import regexp from '_/utils/regexp'
 
 interface IProps {
   value: string
@@ -27,6 +28,9 @@ const SearchBar: React.FC<IProps> = ({
 }) => {
   const classes = useStyles()
 
+  const isInputValid = value.match(regexp.repo)
+  const isError = !!(error || (value && !isInputValid))
+
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setValue(event.target.value)
@@ -34,11 +38,11 @@ const SearchBar: React.FC<IProps> = ({
     [setValue]
   )
 
-  const handleSubmit = React.useCallback(() => onSubmit(value), [
-    onSubmit,
-    value,
-    page,
-  ])
+  const handleSubmit = React.useCallback(
+    () => isInputValid && onSubmit(value),
+    // eslint-disable-next-line
+    [isInputValid, onSubmit, value, page]
+  )
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -48,8 +52,6 @@ const SearchBar: React.FC<IProps> = ({
     },
     [handleSubmit]
   )
-
-  // todo field validation
 
   return (
     <Grid container item justify="center">
@@ -62,8 +64,8 @@ const SearchBar: React.FC<IProps> = ({
           value={value}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
-          error={!!error}
-          helperText={error && 'Please check owner or repositoryName'}
+          error={isError}
+          helperText={isError && 'Please check owner or repositoryName'}
         />
         <Grid item className={classes.floating}>
           {loading ? (
@@ -71,7 +73,7 @@ const SearchBar: React.FC<IProps> = ({
               <CircularProgress size={20} />
             </IconButton>
           ) : (
-            <IconButton onClick={handleSubmit}>
+            <IconButton onClick={handleSubmit} disabled={!isInputValid}>
               <SearchIcon />
             </IconButton>
           )}

@@ -15,6 +15,7 @@ import TablePagination from '@material-ui/core/TablePagination'
 import useStyles from '_/components/ForksTable/style'
 import { IFork } from '_/components/ForksTable/types'
 import { rowSelector } from '_/components/ForksTable/helpers'
+import { isPageExist } from '_/pages/Search/helpers'
 
 interface IProps {
   data: IFork[]
@@ -36,19 +37,22 @@ const ForksTable: React.FC<IProps> = ({
   // useStyles
   const classes = useStyles()
   // useMemo
-  const rows = React.useMemo(() => data.map(rowSelector), [
-    data,
-    page,
-    rowsPerPage,
-  ])
+  const rows = React.useMemo(() => data.map(rowSelector), [data])
+  const emptyRows = React.useMemo(
+    () =>
+      data?.length
+        ? rowsPerPage -
+          Math.min(rowsPerPage, totalCount - (page - 1) * rowsPerPage)
+        : rowsPerPage,
+    [data, rowsPerPage, totalCount, page]
+  )
   // useCallback
   const handleChangePage = React.useCallback(
     (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-      setPage(newPage)
+      setPage(newPage + 1)
     },
     [setPage]
   )
-
   const handleChangeRowsPerPage = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setRowsPerPage(parseInt(event.target.value, 10))
@@ -56,10 +60,6 @@ const ForksTable: React.FC<IProps> = ({
     },
     [setPage, setRowsPerPage]
   )
-
-  const emptyRows = data?.length
-    ? rowsPerPage - Math.min(rowsPerPage, totalCount - page * rowsPerPage)
-    : rowsPerPage
 
   return (
     <Grid container item justify="center">
@@ -101,15 +101,17 @@ const ForksTable: React.FC<IProps> = ({
               )}
             </TableBody>
           </Table>
-          <TablePagination
-            component="div"
-            count={totalCount}
-            page={page}
-            onChangePage={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[5, 10, 25]}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+          {isPageExist(totalCount, page, rowsPerPage) && (
+            <TablePagination
+              component="div"
+              count={totalCount}
+              page={page - 1}
+              onChangePage={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              rowsPerPageOptions={[5, 10, 25]}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          )}
         </TableContainer>
       </Grid>
     </Grid>

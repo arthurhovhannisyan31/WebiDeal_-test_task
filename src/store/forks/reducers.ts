@@ -20,7 +20,8 @@ interface IInitialStateRecord {
   error: any
   // todo types
   data: any
-  totalCount: number
+  // todo types
+  totalCount: any
 }
 
 const InitialStateRecord = Record<IInitialStateRecord>({
@@ -29,7 +30,9 @@ const InitialStateRecord = Record<IInitialStateRecord>({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   data: new Map(),
-  totalCount: 0,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  totalCount: new Map(),
 })
 
 // todo review
@@ -54,8 +57,10 @@ const forksReducer = (state = new InitialStateRecord(), action: IAction) => {
     case GET_FORKS_COUNT_SUCCESS:
       return state
         .set('loading', false)
-        .set('totalCount', payload)
         .set('error', false)
+        .update('totalCount', (collection) =>
+          collection.set(payload.url, payload.data)
+        )
     default:
       return state
   }
